@@ -1,0 +1,147 @@
+AppointmentDate,Provider,Guarantor,GuarantorPhone,Patient,PatientPhones,Age,NP,Procedures,VisitType,ScheduledProduction,RescheduledDate
+7/11/2017 0:00,Amanda Chugg,Jason Nierman,H: (907) 371-3008,Shannon Nierman,"H: (907) 371-3008, C: (907) 371-3008",50,No,"D0120, D0274, D1110, D1208",Hygiene,132,
+7/18/2017 0:00,Amanda Chugg,Kent Winegar,H: () -,Kent Winegar,C: (801) 791-9938,65,No,"D0120, D0274, D1110",Hygiene,89,9/21/2017 15:40
+7/18/2017 0:00,Amanda Chugg,Melissa Ward,H: (202) 280-8130,Gunhild Forselv,"H: (202) 280-8130, C: (801) 923-3959",45,Yes,"D0120, D1110",Hygiene,69,7/18/2017 10:00
+7/20/2017 0:00,Amanda Chugg,Kyle Nelson,H: (801) 528-8900,Kyle Nelson,"H: (801) 528-8900, C: (801) 528-8900",33,No,"D0120, D0274, D1110",Hygiene,238,
+7/6/2017 0:00,Chad Wagstaff,Paul Nesbit,H: (703) 200-9429,Paul Nesbit,"H: (703) 200-9429, C: (703) 200-5522",57,No,"D2393, D2331",Restorative,203,1/11/2018 9:30
+7/11/2017 0:00,Chad Wagstaff,Jeff Shugars,H: (605) 334-4164,Jeff Shugars,"H: (605) 334-4164, C: (605) 370-1726",50,No,"D2391, D2391",Restorative,146,
+7/20/2017 0:00,Chad Wagstaff,Barry Best,H: () -,Mckenna Best,,21,No,D2393,Restorative,132,7/25/2017 9:00
+6/6/2017 0:00,Amanda Chugg,Nancy Rhodes,H: (801) 745-6265,Thomas Driggs,"H: (801) 745-6265, C: (702) 324-2676",22,No,"D0120, D0274, D1110",Hygiene,93,3/1/2018 8:00
+6/27/2017 0:00,Amanda Chugg,Nancy Cummens,H: (801) 564-4500,Nancy Cummens,H: (801) 564-4500,46,No,"D0120, D0274, D1110, D1208",Hygiene,144,
+6/27/2017 0:00,Amanda Chugg,Theresa Brown,H: (801) 782-9157,William Brown,"H: (801) 782-9157, C: (801) 430-1035",54,No,"D0120, D0274, D4910",Hygiene,147,10/19/2017 9:00
+8/1/2017 0:00,Amanda Chugg,Brendon Lewis,H: (801) 989-9669,Brendon Lewis,"H: (801) 989-9669, C: (801) 989-9669",47,No,"D0120, D0274, D1110",Hygiene,238,
+8/3/2017 0:00,Amanda Chugg,Sherrie Brennan,H: (801) 430-7218,Sherrie Brennan,"H: (801) 430-7218, C: (801) 430-7218",60,No,"D0120, D0274, D1110",Hygiene,110,2/22/2018 12:00
+8/3/2017 0:00,Amanda Chugg,Sherrie Brennan,H: (801) 430-7217,Patrick Brennan,"H: (801) 430-7217, C: (801) 430-7217",65,No,"D0120, D0274, D1110",Hygiene,106,8/29/2017 9:00
+9/5/2017 0:00,Amanda Chugg,Seth Miller,H: (801) 920-8126,Seth Miller,H: (801) 920-8126,43,No,"D0120, D1110",Hygiene,81,10/31/2017 9:00
+9/7/2017 0:00,Amanda Chugg,Tanisha McRae,H: (801) 910-8378,Tanisha McRae,"H: (801) 910-8378, C: (801) 910-8378",38,No,"D0120, D0274, D1110",Hygiene,78,9/20/2018 17:00
+9/19/2017 0:00,Amanda Chugg,Kirk Stickler,H: (801) 648-7822,Kirk Stickler,"H: (801) 648-7822, C: (801) 430-0299",51,No,"D0120, D1110, D1208",Hygiene,209,
+9/21/2017 0:00,Amanda Chugg,Sharon White,H: (615) 533-0929,Sharon White,"H: (615) 533-0929, C: (615) 533-0929",51,No,"D0120, D4910, D1208",Hygiene,133,9/12/2018 11:00
+9/26/2017 0:00,Chad Wagstaff,Lance Roylance,H: (801) 389-6740,Leslie Roylance,"H: (801) 389-6740, C: (801) 389-6740",47,No,"D2950, D2740",Restorative,795,10/17/2019 18:00
+10/17/2017 0:00,Amanda Chugg,Brenda Engeler,H: (559) 246-1657,Martin Engeler,"H: (559) 246-1657, C: (559) 676-3884",63,No,"D0120, D0274, D1110",Hygiene,118,4/3/2018 11:20
+10/17/2017 0:00,Chad Wagstaff,Seth Miller,H: (801) 791-7767,Shauna Miller,"H: (801) 791-7767, C: (801) 791-7767",46,No,"D2331, D2392",Restorative,201,
+10/17/2017 0:00,Chad Wagstaff,Seth Miller,H: (801) 791-7767,Blakley Miller,H: (801) 791-7767,12,No,D2392,Restorative,100,
+10/17/2017 0:00,Chad Wagstaff,Seth Miller,H: (801) 791-7767,Grant Miller,H: (801) 791-7767,14,No,"D2393, D2391, D2392",Restorative,297,
+11/7/2017 0:00,Amanda Chugg,Steven Lewis,H: (801) 675-9292,Steven Lewis,H: (801) 675-9292,65,No,"D0120, D0274, D4910",Hygiene,290,8/23/2018 12:00
+11/7/2017 0:00,Amanda Chugg,Steven Benjamin,H: (907) 469-2776,Tiara Benjamin,"H: (907) 469-2776, C: (907) 469-2776",27,No,"D0120, D0274, D1110",Hygiene,127,11/9/2017 14:00
+11/21/2017 0:00,Amanda Chugg,Kirk Stickler,H: (801) 648-7822,Jennifer Stickler,"H: (801) 648-7822, C: (801) 430-0073",48,No,"D0120, D0274, D1110",Hygiene,238,1/2/2018 14:00
+11/2/2017 0:00,Chad Wagstaff,Theresa Brown,H: (801) 782-9157,William Brown,"H: (801) 782-9157, C: (801) 430-1035",54,No,"D2392, D2391, D2392",Restorative,264,2/20/2018 10:00
+11/9/2017 0:00,Chad Wagstaff,Sherrie Brennan,H: (801) 430-7217,Patrick Brennan,"H: (801) 430-7217, C: (801) 430-7217",65,No,"D2392, D2393, D2392",Restorative,357,10/3/2018 8:30
+11/9/2017 0:00,Chad Wagstaff,Carrie Hadlock,H: (801) 476-5369,Carrie Hadlock,"H: (801) 476-5369, C: (801) 564-9851",58,No,"D2950, D2950, D2740, D2740",Restorative,"1,268",1/16/2018 14:00
+11/28/2017 0:00,Chad Wagstaff,Jeanette Cornell,H: (801) 648-6797,Jeanette Cornell,"H: (801) 648-6797, C: (801) 648-6797",64,No,D2740,Restorative,665,3/22/2018 9:00
+11/7/2017 0:00,Chad Wagstaff,Callie Stephens,H: (805) 798-3162,Callie Stephens,"H: (805) 798-3162, C: (805) 798-3162",25,No,,Uncategorized,0,2/20/2018 16:40
+12/5/2017 0:00,Amanda Chugg,Leslie Evans,H: (801) 510-7626,Jayden Gorden,"H: (801) 510-7626, C: (801) 510-7626, W: (801) 510-7626",22,No,"D0120, D0274, D1110",Hygiene,89,
+12/7/2017 0:00,Amanda Chugg,Douglas Kirkham,H: (801) 721-6847,Douglas Kirkham,"H: (801) 721-6847, C: (801) 721-6847",62,No,"D0120, D0274, D1110",Hygiene,89,7/17/2018 16:00
+12/7/2017 0:00,Amanda Chugg,,,,,,Yes,"D0150, D1110",Hygiene,210,8/9/2018 16:30
+12/14/2017 0:00,Amanda Chugg,Pete Choppin,H: (310) 982-0200,Pete Choppin,"H: (310) 982-0200, C: (310) 982-0200",54,No,D4910,Hygiene,69,10/9/2018 11:40
+12/19/2017 0:00,Amanda Chugg,Matthew Watson,H: (801) 791-3367,Hannah Watson,"H: (801) 791-3367, C: (801) 791-3367",22,No,"D0120, D1110",Hygiene,84,4/30/2019 11:00
+12/7/2017 0:00,Chad Wagstaff,Robert Danielson,H: (847) 456-4649,Robert Danielson,"H: (847) 456-4649, C: (847) 456-4649",46,No,"D2740, D2392",Restorative,784,5/3/2018 12:00
+1/2/2018 0:00,Amanda Chugg,,,,,,Yes,"D0274, D0150, D1110",Hygiene,284,8/9/2018 16:30
+1/16/2018 0:00,Amanda Chugg,Monte Stewart,H: (801) 745-3158,Jonas Stewart,"H: (801) 745-3158, C: (801) 940-0661",16,No,"D0120, D1120, D1208",Hygiene,67,5/8/2018 16:40
+1/16/2018 0:00,Amanda Chugg,Monte Stewart,H: (801) 745-3158,Solomon Stewart,"H: (801) 745-3158, C: (801) 940-0661",13,No,"D0120, D1120, D1208",Hygiene,67,5/8/2018 17:20
+1/16/2018 0:00,Amanda Chugg,Monte Stewart,H: (801) 745-3158,Abe Stewart,"H: (801) 745-3158, C: (801) 940-0661",11,No,"D0120, D1120, D1208",Hygiene,67,5/8/2018 16:00
+1/18/2018 0:00,Amanda Chugg,Perry Keys,H: (801) 380-2244,Perry Keys,"H: (801) 380-2244, C: (801) 380-2244",41,No,"D0120, D1110, D1208",Hygiene,87,4/24/2021 11:00
+1/23/2018 0:00,Amanda Chugg,Randy Wagstaff,H: (435) 230-4489,Loralee Wagstaff,"H: (435) 230-4489, C: (435) 230-4489",56,No,"D0120, D1110",Hygiene,62,2/1/2018 10:00
+1/23/2018 0:00,Amanda Chugg,Randy Wagstaff,H: (435) 225-4873,Randy Wagstaff,"H: (435) 225-4873, C: (435) 230-4490",58,No,"D0120, D1110",Hygiene,62,3/6/2018 16:00
+1/23/2018 0:00,Amanda Chugg,Lance Roylance,H: (801) 710-5498,Lance Roylance,"H: (801) 710-5498, C: (801) 710-5498",44,No,"D0120, D1110",Hygiene,73,
+1/23/2018 0:00,Amanda Chugg,Joshua Brennan,H: (801) 430-7216,Joshua Brennan,"H: (801) 430-7216, C: (801) 430-7216",40,No,"D0120, D1110",Hygiene,164,
+1/9/2018 0:00,Chad Wagstaff,Nancy Lowe,H: (801) 710-1718,Nancy Lowe,"H: (801) 710-1718, C: (801) 710-1718",74,No,"D2950, D2950, D2740, D2740",Restorative,"1,796",2/27/2018 9:00
+1/16/2018 0:00,Chad Wagstaff,James Morgan,H: (801) 698-5241,James Morgan,"H: (801) 698-5241, C: (801) 698-5241",72,No,"D2950, D2950, D6245, D6245, D6740, D6740, D6740",Restorative,"5,332",6/21/2018 11:00
+1/18/2018 0:00,Chad Wagstaff,Don White,H: (801) 745-1514,Rosemary White,H: (801) 745-1514,74,No,D2740,Restorative,710,1/18/2018 11:20
+1/23/2018 0:00,Chad Wagstaff,Elizabeth Warner,H: (253) 640-7139,Rich Friend,"H: (253) 640-7139, C: (253) 640-7139",64,Yes,"D2950, D2740",Restorative,767,12/12/2018 8:00
+1/23/2018 0:00,Chad Wagstaff,Nickolas Guthrie,H: (801) 309-1319,Shauna Guthrie,"H: (801) 309-1319, C: (801) 309-1319",42,Yes,"D2392, D2392, D2392",Restorative,321,2/24/2020 8:30
+1/30/2018 0:00,Chad Wagstaff,Lezlie Zollinger,H: (925) 989-3739,Lezlie Zollinger,"H: (925) 989-3739, C: (925) 989-3739, W: (925) 989-9980",65,No,D2740,Restorative,738,5/24/2018 10:00
+2/13/2018 0:00,Amanda Chugg,Travis Hemming,H: () -,Angela Hemming,C: (801) 866-4122,50,No,"D0120, D0274, D1110, D1208",Hygiene,118,10/18/2018 11:00
+2/13/2018 0:00,Amanda Chugg,Candace Weaver,H: (801) 675-2525,Candace Weaver,"H: (801) 675-2525, C: (801) 675-2525",39,No,"D0120, D1110",Hygiene,66,2/25/2019 9:00
+2/20/2018 0:00,Amanda Chugg,Bethany Brammer,H: (801) 362-0619,Sophia Brammer,H: (801) 362-0619,14,No,"D0120, D1120",Hygiene,140,
+2/20/2018 0:00,Amanda Chugg,Bethany Brammer,H: (801) 362-0619,Easton Brammer,H: (801) 362-0619,11,No,"D0120, D1120",Hygiene,140,
+2/20/2018 0:00,Amanda Chugg,Luke Zeleznick,H: (801) 668-5626,Journey Zeleznick,"H: (801) 668-5626, C: (801) 668-5626",12,No,"D0272, D1120",Hygiene,54,
+2/13/2018 0:00,Chad Wagstaff,Carrie Hadlock,H: (801) 476-5369,Carrie Hadlock,"H: (801) 476-5369, C: (801) 564-9851",58,No,"D2950, D2950, D2740, D2740",Restorative,"1,268",6/26/2018 9:00
+2/27/2018 0:00,Chad Wagstaff,Darrell Brown,H: (760) 807-6408,Darrell Brown,"H: (760) 807-6408, C: (760) 807-6408",65,Yes,D3330,Restorative,"1,198",
+3/1/2018 0:00,Amanda Chugg,Monte Stewart,H: (801) 745-3158,Solomon Stewart,"H: (801) 745-3158, C: (801) 940-0661",13,No,"D0120, D0272, D1120",Hygiene,73,5/8/2018 17:20
+3/1/2018 0:00,Amanda Chugg,Monte Stewart,H: (801) 745-3158,Jonas Stewart,"H: (801) 745-3158, C: (801) 940-0661",16,No,"D0120, D0272, D1120",Hygiene,73,5/8/2018 16:40
+3/1/2018 0:00,Amanda Chugg,Monte Stewart,H: (801) 745-3158,Abe Stewart,"H: (801) 745-3158, C: (801) 940-0661",11,No,"D0120, D0272, D1120",Hygiene,73,5/8/2018 16:00
+3/6/2018 0:00,Amanda Chugg,Jodi Jimerson,H: (858) 775-8878,Jodi Jimerson,"H: (858) 775-8878, C: (858) 775-8878",56,No,"D0274, D1110",Hygiene,101,5/10/2018 14:00
+3/20/2018 0:00,Chad Wagstaff,Gerald(Troy) Burnett,H: (801) 732-9655,Michelle Burnett,"H: (801) 732-9655, C: (801) 458-2260",52,No,"D2393, D2393, D2392",Restorative,914,4/17/2018 15:00
+3/6/2018 0:00,Chad Wagstaff,Thomas Pollock,H: (801) 710-5507,Thomas Pollock,"H: (801) 710-5507, C: (801) 710-5507, W: (385) 519-8239",55,No,,Uncategorized,0,
+4/17/2018 0:00,Amanda Chugg,Nancy Lowe,H: (801) 710-0995,John Lowe,"H: (801) 710-0995, C: (801) 710-0995",76,No,"D0120, D0274, D1110",Hygiene,131,
+4/12/2018 0:00,Chad Wagstaff,Jason Peterson*,H: (801) 791-3939,Jason Peterson*,"H: (801) 791-3939, C: (801) 745-0276",50,No,D0140,Restorative,47,4/19/2018 8:00
+5/29/2018 0:00,Amanda Chugg,Sharon White,H: (615) 533-0929,Sydney White,"H: (615) 533-0929, C: (615) 533-0929",19,No,"D0230, D0274, D0220, D1110",Hygiene,87,9/11/2018 16:00
+5/1/2018 0:00,Chad Wagstaff,Jason Peterson*,H: (801) 745-0276,Jacob Peterson,"H: (801) 745-0276, C: (801) 791-3939",20,No,D2391,Restorative,96,10/25/2018 8:00
+5/1/2018 0:00,Chad Wagstaff,Kirk Stickler,H: (801) 648-7822,Gracie Stickler,H: (801) 648-7822,19,No,"D2392, D2393, D2391, D2392",Restorative,"1,062",8/30/2018 16:00
+5/29/2018 0:00,Chad Wagstaff,Lezlie Zollinger,H: (925) 989-3739,Lezlie Zollinger,"H: (925) 989-3739, C: (925) 989-3739, W: (925) 989-9980",65,No,,Uncategorized,0,11/29/2018 10:00
+6/26/2018 0:00,Amanda Chugg,,,,,,Yes,"D0230, D0274, D0150, D0220, D1110, D1208",Hygiene,392,8/9/2018 16:30
+6/13/2018 0:00,Chad Wagstaff,Therese Candella,H: (251) 367-2546,Micah Candella,"H: (251) 367-2546, C: (251) 367-2546",26,Yes,"D2392, D2393, D2392",Restorative,346,1/30/2019 11:00
+7/10/2018 0:00,Amanda Chugg,Nickolas Guthrie,H: (801) 309-1319,Shauna Guthrie,"H: (801) 309-1319, C: (801) 309-1319",42,No,"D0120, D0330, D1110, D1208",Hygiene,162,2/24/2020 8:30
+7/11/2018 0:00,Amanda Chugg,Dave Mills,H: (801) 628-9898,Dave Mills,"H: (801) 628-9898, C: (801) 628-9898",73,No,"D0120, D0230, D0220, D0274, D1110, D1208",Hygiene,346,7/19/2018 15:00
+8/7/2018 0:00,Amanda Chugg,Robert Lowe,H: (801) 745-2673,Christine Lowe,"H: (801) 745-2673, C: (801) 541-2096",69,No,"D0120, D0230, D0220, D0274, D1110, D1208",Hygiene,179,8/23/2018 9:00
+8/14/2018 0:00,Amanda Chugg,Kristie Tueller,H: (801) 710-3534,Kristie Tueller,"H: (801) 710-3534, C: (801) 710-3534",54,No,"D0120, D0230, D0220, D0274, D4910",Hygiene,169,
+11/15/2018 0:00,Amanda Chugg,Lani Caldwell,H: (801) 628-8079,Lani Caldwell,"H: (801) 628-8079, W: (801) 447-3979",41,No,"D0230, D0220, D0120, D0274, D1110, D1208, D3960",Hygiene,276,3/19/2019 10:00
+1/28/2019 0:00,Amanda Chugg,,,,,,Yes,"D0230, D0274, D0150, D0220, D1110, D1208",Hygiene,392,2/9/2019 8:00
+2/21/2019 0:00,Chad Wagstaff,Carol Ward,H: (435) 723-3266,Carol Ward,"H: (435) 723-3266, C: (435) 730-2897",88,No,D9999,Uncategorized,0,4/12/2019 12:10
+5/30/2019 0:00,Amanda Chugg,Tyler Hincy,H: (253) 678-8201,Christena Hincy,"H: (253) 678-8201, C: (253) 678-8201",43,No,"D0120, D0230, D0220, D0274, D1110, D1208",Hygiene,147,8/14/2019 11:00
+5/30/2019 0:00,Amanda Chugg,Tyler Hincy,H: (253) 678-8201,Oliver Hincy,"H: (253) 678-8201, C: (253) 678-8201",14,No,"D0120, D0230, D0272, D1120, D1208",Hygiene,110,8/14/2019 12:50
+5/30/2019 0:00,Amanda Chugg,Tyler Hincy,H: (253) 678-8201,Aida Hincy,"H: (253) 678-8201, C: (253) 678-8201",17,No,"D0120, D0230, D0220, D0274, D1110, D1208",Hygiene,147,8/2/2019 11:20
+5/30/2019 0:00,Amanda Chugg,Tyler Hincy,H: (253) 678-8201,Julia Hincy,"H: (253) 678-8201, C: (253) 678-8201",11,No,"D0120, D0230, D0220, D0272, D1120, D1208",Hygiene,124,8/14/2019 12:00
+5/30/2019 0:00,Amanda Chugg,Tyler Hincy,H: (253) 678-8201,Parker Hincy,"H: (253) 678-8201, C: (253) 678-8201",18,No,"D0120, D0230, D0220, D0274, D1110, D1208",Hygiene,147,8/20/2019 13:00
+5/8/2019 0:00,Chad Wagstaff,Jeanette Cornell,H: (801) 648-6797,Jeanette Cornell,"H: (801) 648-6797, C: (801) 648-6797",64,No,"D2950, D2740",Restorative,780,11/14/2019 15:00
+5/28/2019 0:00,Chad Wagstaff,Dennis Smith,H: (385) 210-6609,Dennis Smith,"H: (385) 210-6609, C: (385) 210-6609",63,No,D2331,Restorative,99,6/5/2019 17:00
+5/30/2019 0:00,Chad Wagstaff,Sandy Cane,H: (417) 766-2828,Sandy Cane,H: (417) 766-2828,64,Yes,D2392,Restorative,107,
+6/3/2019 0:00,Amanda Chugg,Evan Miller,H: (801) 430-5781,Evan Miller,H: (801) 430-5781,59,No,D4910,Hygiene,90,12/18/2019 12:00
+6/17/2019 0:00,Amanda Chugg,Lani Caldwell,H: (801) 628-8079,Lani Caldwell,"H: (801) 628-8079, W: (801) 447-3979",41,No,"D0120, D0274, D1110",Hygiene,190,7/15/2019 13:00
+6/3/2019 0:00,Chad Wagstaff,Carrie Hadlock,H: (801) 476-5369,Carrie Hadlock,"H: (801) 476-5369, C: (801) 564-9851",58,No,"D2392, D2391",Restorative,172,8/6/2019 8:00
+6/13/2019 0:00,Chad Wagstaff,Lezlie Zollinger,H: (925) 989-3739,Lezlie Zollinger,"H: (925) 989-3739, C: (925) 989-3739, W: (925) 989-9980",65,No,,Restorative,0,12/18/2019 11:00
+6/13/2019 0:00,Chad Wagstaff,Tammy Barnett,H: (385) 243-5045,Tammy Barnett,"H: (385) 243-5045, C: (385) 243-5045",38,Yes,D2331,Restorative,83,6/25/2019 13:00
+7/5/2019 0:00,Amanda Chugg,Michael Cline,H: (386) 235-7574,Michael Cline,"H: (386) 235-7574, C: (386) 235-7574",39,No,"D0120, D0274, D1110, D1206",Hygiene,285,11/14/2019 16:00
+7/5/2019 0:00,Amanda Chugg,,,,,,Yes,"D0120, D0274, D1110",Hygiene,238,7/15/2019 8:00
+7/25/2019 0:00,Chad Wagstaff,Nike Cleverly,H: (970) 629-1952,Nike Cleverly,"H: (970) 629-1952, C: (970) 629-1952",28,No,D2391,Restorative,74,11/12/2019 8:00
+8/22/2019 0:00,Amanda Chugg,Randy Melton,H: (801) 540-2586,Randy Melton,"H: (801) 540-2586, C: (801) 540-2586",47,No,"D0120, D0274, D1110",Hygiene,111,
+8/8/2019 0:00,Chad Wagstaff,Jill Baronowski,H: (860) 608-1255,Jill Baronowski,"H: (860) 608-1255, C: (860) 608-1255",60,No,D2393,Restorative,141,12/30/2019 6:00
+8/20/2019 0:00,Chad Wagstaff,Jodi Schenck,H: (801) 510-1888,Jodi Schenck,"H: (801) 510-1888, C: (801) 510-1888",51,No,"D2392, D2393, D2392",Restorative,327,5/14/2020 11:20
+8/24/2019 0:00,One Hygiene,Tyler Hincy,H: (253) 678-8201,Oliver Hincy,"H: (253) 678-8201, C: (253) 678-8201",14,No,,Uncategorized,0,8/26/2019 14:00
+9/3/2019 0:00,Amanda Chugg,Mark White,H: (307) 277-5837,Jennifer White,"H: (307) 277-5837, C: (307) 277-5837",40,No,"D0120, D0230, D0220, D0274, D1110, D1206",Hygiene,145,9/17/2019 11:00
+9/17/2019 0:00,Amanda Chugg | Amanda Chugg,Bret Richmond,H: (801) 745-2431,Bret Richmond,"H: (801) 745-2431, C: (435) 840-0994",63,No,D4910,Hygiene,74,
+9/23/2019 0:00,Amanda Chugg,Lee Broadbent,H: (385) 238-0587,Lee Broadbent,"H: (385) 238-0587, C: (385) 238-0587, W: (801) 791-4462",53,No,"D0120, D0230, D0220, D0274, D1110",Hygiene,301,10/13/2020 14:00
+11/4/2019 0:00,Amanda Chugg,Carrie Hadlock,H: (801) 476-5369,Carrie Hadlock,"H: (801) 476-5369, C: (801) 564-9851",58,No,"D0274, D1110",Hygiene,67,10/27/2020 8:00
+11/16/2019 0:00,Amanda Chugg,Brian Beckham,H: (661) 243-7448,Brian Beckham,"H: (661) 243-7448, C: (661) 213-6050",45,No,"D0274, D0150, D0220, D1110",Hygiene,152,12/4/2019 18:00
+11/12/2019 0:00,Chad Wagstaff,Travis Hemming,H: () -,Angela Hemming,C: (801) 866-4122,50,No,"D2740, D2950",Restorative,711,10/7/2020 11:00
+11/16/2019 0:00,Amanda Chugg,,,,,,Yes,D0150,Restorative,107,11/16/2019 9:10
+12/26/2019 0:00,Amanda Chugg,Brent Openshaw,H: (801) 616-3536,Jennifer Openshaw,H: (801) 616-3536,21,No,"D0120, D0274, D1110",Hygiene,238,12/26/2019 11:00
+12/10/2019 0:00,Chad Wagstaff,Brian Beckham,H: (661) 243-7448,Mayer Beckham,"H: (661) 243-7448, C: (661) 243-7448",7,Yes,D2392,Restorative,103,
+1/7/2020 0:00,Amanda Chugg,Daisy Rodriguez,H: (801) 920-2440,Daisy Rodriguez,"H: (801) 920-2440, C: (801) 920-2440",42,No,D4910,Hygiene,96,9/3/2020 12:00
+1/9/2020 0:00,Amanda Chugg,Larry Ruple,H: (801) 564-4934,Diana Ruple,"H: (801) 564-4934, C: (801) 564-4934",64,No,"D0274, D0150, D0220, D1110",Hygiene,116,7/29/2020 15:00
+1/13/2020 0:00,Chad Wagstaff,Tamra Ortega,H: (385) 298-1313,Tamra Ortega,"H: (385) 298-1313, C: (602) 448-6253",62,No,"D2950, D2740",Restorative,711,6/5/2020 9:20
+2/20/2020 0:00,Chad Wagstaff,Evan Lockhart,H: (224) 339-1354,Evan Lockhart,"H: (224) 339-1354, C: (224) 339-1354",24,No,"D2393, D2394, D2393",Restorative,389,3/5/2020 15:30
+3/9/2020 0:00,Amanda Chugg,Nancy Amavisca,H: (916) 601-2336,Gilbert Amavisca,"H: (916) 601-2336, C: (916) 601-2336",69,No,D4910,Hygiene,74,3/17/2020 11:00
+5/12/2020 0:00,Chad Wagstaff,Eric Johnson,H: (801) 745-3893,Eric Johnson,"H: (801) 745-3893, C: (801) 791-4263",66,No,,Uncategorized,0,6/11/2020 12:00
+9/21/2020 0:00,Chad Wagstaff,John Jones,H: (385) 333-6537,John Jones,"H: (385) 333-6537, C: (385) 333-6537",40,No,D0140,Restorative,44,
+11/16/2020 0:00,Marin Goldston,Greg Kroening,H: (801) 721-3415,Nichole Kroening,"H: (801) 721-3415, C: (801) 510-1659",51,No,"D0274, D1110",Hygiene,77,
+11/16/2020 0:00,Chad Wagstaff,Carrie Hadlock,H: (801) 564-2343,James Hadlock,"H: (801) 564-2343, C: (801) 564-2343",56,No,D2332,Restorative,96,4/27/2021 8:00
+12/10/2020 0:00,Marin Goldston,Steve Money,H: (435) 671-3804,Steve Money,"H: (435) 671-3804, C: (435) 671-3804",57,No,"D0120, D0274, D1110, D1206",Hygiene,121,12/22/2020 7:00
+12/2/2020 0:00,Chad Wagstaff,Raymond Higuera,H: (801) 628-8490,Raymond Higuera,"H: (801) 628-8490, C: (801) 628-8490",38,No,"D2392, D2391",Restorative,284,5/20/2021 16:40
+12/8/2020 0:00,Chad Wagstaff,Nicholas Barnett,H: (385) 299-4658,Nicholas Barnett,H: (385) 299-4658,27,No,"D2332, D2331, D2332",Restorative,341,5/24/2021 11:30
+1/7/2021 0:00,Marin Goldston,Shane Atmore,H: (801) 528-2986,Jill Atmore,"H: (801) 528-2986, C: (801) 528-2986",40,No,D1110,Hygiene,40,
+1/13/2021 0:00,Chad Wagstaff,Mathew Riley,H: (435) 260-9310,Tanner Riley,"H: (435) 260-9310, C: (435) 260-9310",18,No,"D2391, D2391, D2391, D2392",Restorative,337,1/21/2021 17:00
+1/29/2021 0:00,Chad Wagstaff,Balsa Laban,H: (512) 466-2931,Mateo Laban,"H: (512) 466-2931, C: (512) 466-2931",13,Yes,"D2391, D2393, D2392",Restorative,302,
+1/19/2021 0:00,Chad Wagstaff,Lance Roylance,H: (801) 389-6740,Leslie Roylance,"H: (801) 389-6740, C: (801) 389-6740",47,No,,Uncategorized,0,
+2/16/2021 0:00,Marin Goldston,Nancy Amavisca,H: (916) 601-2336,Gilbert Amavisca,"H: (916) 601-2336, C: (916) 601-2336",69,No,"D0120, D0274, D1206, D4910",Hygiene,146,2/26/2021 9:00
+2/18/2021 0:00,Marin Goldston,DeVon Romero,H: (385) 244-6553,DeVon Romero,"H: (385) 244-6553, C: (385) 244-6553",29,No,"D0120, D0274, D1110",Hygiene,100,
+2/18/2021 0:00,Marin Goldston,Lani Caldwell,H: (801) 920-1264,Chris Caldwell,H: (801) 920-1264,42,No,"D0120, D0274, D1110",Hygiene,190,2/18/2021 18:30
+2/8/2021 0:00,Chad Wagstaff,Bryan Nakashima,H: (661) 477-5215,Bryan Nakashima,"H: (661) 477-5215, C: (661) 477-5215",36,No,"D2740, D2950",Restorative,711,6/22/2021 16:30
+2/8/2021 0:00,Chad Wagstaff,Allison Thomas,H: (801) 430-0458,Allison Thomas,"H: (801) 430-0458, C: (801) 430-0458",49,No,"D2391, D2391, D2391, D2391",Restorative,384,5/24/2021 12:00
+4/8/2021 0:00,Marin Goldston,John McInnes,H: (385) 389-5470,John McInnes,"H: (385) 389-5470, C: (385) 389-5470",56,No,"D0120, D0274, D1110, D1206",Hygiene,162,
+4/12/2021 0:00,Marin Goldston,Tyler Hanson,H: () -,Naomi Briggs,C: (801) 920-0259,15,No,"D0120, D0330, D1110",Hygiene,291,
+4/22/2021 0:00,Marin Goldston,Tyler Hanson,H: (801) 920-0259,Tyler Hanson,"H: (801) 920-0259, C: (801) 920-0259",35,Yes,"D0150, D1110, D0210",Hygiene,156,
+4/9/2021 0:00,Chad Wagstaff,Kevin Spalding,H: (801) 389-0349,Kevin Spalding,"H: (801) 389-0349, C: (801) 389-0349",39,No,"D2392, D2392, D2392",Restorative,309,5/10/2021 17:00
+4/26/2021 0:00,Chad Wagstaff,Andrea Barnett,H: (385) 313-2942,Andrea Barnett,"H: (385) 313-2942, C: (385) 313-2942",32,No,"D2392, D2330",Restorative,196,
+4/8/2021 0:00,Marin Goldston,Tyler Hanson,H: (801) 920-0259,Coleen Briggs,"H: (801) 920-0259, C: (801) 920-0259",48,No,,Uncategorized,0,
+4/12/2021 0:00,Marin Goldston,Tyler Hanson,H: (801) 920-0259,Coleen Briggs,"H: (801) 920-0259, C: (801) 920-0259",48,No,,Uncategorized,0,
+5/24/2021 0:00,Marin Goldston,,,,,,Yes,"D0150, D1110, D0210",Hygiene,360,10/6/2021 13:30
+5/24/2021 0:00,Chad Wagstaff,Jessica Romero,H: (385) 205-0958,Jessica Romero,"H: (385) 205-0958, C: (385) 205-0958",37,No,D2392,Restorative,98,10/26/2021 16:30
+5/24/2021 0:00,Chad Wagstaff,Jessica Romero,H: (385) 205-0958,Jaela Carrasco,H: (385) 205-0958,13,No,"D2391, D2392, D2392",Restorative,270,11/4/2021 16:00
+5/24/2021 0:00,Chad Wagstaff,Benjamin Romero,H: () -,Benjamin Romero,,57,Yes,,Uncategorized,0,
+6/3/2021 0:00,Marin Goldston,Therese Candella,H: (801) 710-2248,Michael Candella,"H: (801) 710-2248, C: (801) 710-2248",50,No,D1110,Hygiene,47,
+6/3/2021 0:00,Amanda Chugg,Jamie Francisco,H: (503) 858-0707,Jamie Francisco,H: (503) 858-0707,35,No,"D0274, D1110",Hygiene,78,6/22/2021 10:00
+6/21/2021 0:00,Chad Wagstaff,Raymond Higuera,H: (801) 628-8490,Raymond Higuera,"H: (801) 628-8490, C: (801) 628-8490",38,No,"D2392, D2391, D2391",Restorative,416,9/9/2021 18:00
+6/30/2021 0:00,Chad Wagstaff,Ronald Kincher,H: (801) 244-9332,Kimberly Kincher,"H: (801) 244-9332, C: (801) 201-5731",62,No,,Uncategorized,0,8/27/2021 11:30
+8/26/2021 0:00,Amanda Chugg,Sharon White,H: (615) 533-0929,Sharon White,"H: (615) 533-0929, C: (615) 533-0929",51,No,"D0120, D0274, D4910",Hygiene,145,8/30/2021 9:30
+8/25/2021 0:00,Chad Wagstaff,,,,,,Yes,"D0140, D0220",Restorative,123,10/6/2021 13:30
