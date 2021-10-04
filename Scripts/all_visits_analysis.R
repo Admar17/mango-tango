@@ -45,21 +45,62 @@ all_vists_dated %>%
 
 ### All Visits Time Series Analysis 
 
+#### Original Model
+
 all_vists_ts <- all_vists_dated %>% 
   group_by(StartOfMonth) %>% 
   summarise(count = (n())) %>% 
   pull(count) %>% 
   ts(start = c(2017,6), frequency = 12)
 
-# all_vists_ts[35] <- mean(all_vists_ts[c(33:34,36:37)])
 
 all_vists_ts_decompsed <- decompose(all_vists_ts)
 plot(all_vists_ts_decompsed)
 
-arima(all_vists_ts)
 
-Box.test(all_vists_ts, lag=10, type = 'Ljung-Box')
 
-#### Creating ACF plot
+#### New Model with Outlier Fix t_diff = 1
+all_vists_ts_fix_1 <- all_vists_ts
+all_vists_ts_fix_1[35] <- mean(all_vists_ts_fix_1[c(34,35:36)])
 
-acf(x= all_vists_ts, lag.max = 10)
+all_vists_ts_1_decompsed <- decompose(all_vists_ts_fix_1)
+plot(all_vists_ts_1_decompsed)
+
+
+#### New Model with Outlier Fix t_diff = 2
+all_vists_ts_fix_2 <- all_vists_ts
+all_vists_ts_fix_2[35] <- mean(all_vists_ts_fix_2[c(33:34,36:37)])
+
+all_vists_ts_2_decompsed <- decompose(all_vists_ts_fix_2)
+plot(all_vists_ts_2_decompsed)
+
+#### New Model with Outlier Fix t_diff = 3
+all_vists_ts_fix_3 <- all_vists_ts
+all_vists_ts_fix_3[35] <- mean(all_vists_ts_fix_3[c(32:34,36:38)])
+
+all_vists_ts_3_decompsed <- decompose(all_vists_ts_fix_3)
+plot(all_vists_ts_3_decompsed)
+
+#### New Model with Outlier Fix t_diff = 4
+all_vists_ts_fix_4 <- all_vists_ts
+all_vists_ts_fix_4[35] <- mean(all_vists_ts_fix_4[c(31:34,36:39)])
+
+all_vists_ts_4_decompsed <- decompose(all_vists_ts_fix_4)
+plot(all_vists_ts_4_decompsed)
+
+#### New Model with Outlier Fix t_diff = 4
+all_vists_ts_fix_4 <- all_vists_ts
+all_vists_ts_fix_4[35] <- mean(all_vists_ts_fix_4[c(31:34,36:39)])
+
+all_vists_ts_4_decompsed <- decompose(all_vists_ts_fix_4)
+plot(all_vists_ts_4_decompsed)
+
+#### New Model with Outlier Fix t_diff = 12
+all_vists_ts_fix_12 <- all_vists_ts
+all_vists_ts_fix_12[35] <- mean(all_vists_ts_fix_12[c(21:34,36:47)])
+
+all_vists_ts_12_decompsed <- decompose(all_vists_ts_fix_12)
+plot(all_vists_ts_12_decompsed)
+
+
+
