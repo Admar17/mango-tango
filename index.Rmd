@@ -1,5 +1,11 @@
 ---
-title: "Introductions"
+title: "Project Overview"
+description: |
+  Alex Martinez's Data Science Project.
+author:
+  - name: Alex Martinez
 site: distill::distill_website
 listing: posts
 ---
+
+One of the highlights of my senior is being able to apply various techniques and develop new data science techniques to forecast, predict, and better understand what behaviors and trends we notice in our sample data. We then take those observations and ideas and apply them to practical and beneficial use cases. For this senior project, I will be combining to project ideas into one. One part of of the project is time series analysis and time series forecasting with key business metrics such as monthly revenues, monthly expenditures, and monthly patient visits. The other part of the project is using a machine learning image classifier    
