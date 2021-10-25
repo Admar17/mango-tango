@@ -1,0 +1,232 @@
+---
+title: "OracleTimeseriesTutorial"
+author: "AlexMartinez"
+date: "10/20/2021"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## A Short Introduction to ARIMA
+
+ARIMA is short for auto-regressive integrated moving average and is specficied by three order parameters $(p,d,q)$.
+
+An $\bf{auto regressive\text{ } (AR(p))}$ component is referrig to the use of past values in the regression equation of the series $Y$. The auto-regressive parameter $p$ specifies the number of lags used in the model.
+
+$\bf{Integrated \text{ } (I(d))}$ is defined the degree of differencing $d$. Difference a series involves subtracting a the current value from it previous values $d$ times. Used to stabilize a the series when the stationarity assumption is not met.
+
+The $\bf{\text{moving average (MA(q))}}$ represents the error of the model as a combination of previous error terms $e_t$/ The order $q$ determines the number of terms to include in the model.
+
+ARIMA works best on long and stable series of data.
+
+
+## Starting with R {.tabset}
+
+### Step 1: Load R Packages
+
+Start out by loading in the necessary data and packages for analysis.
+
+```{r}
+
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(lubridate)
+library(forecast)
+library(tseries)
+
+# Note: The Tutorial Uses Different Test Data
+
+all_vists <- read.csv('../Data/DentalIntelFiles/DentalIntelFiles_all_vists.csv')
+```
+
+### Step 1.5: Aggregate and Clean your Data
+
+The Oracle tutorial fails to mention that you should clean and tidy your data for time-series analysis. There are many methods that you can use. In this tutorial I will be use using dplyr's functions.
+
+```{r}
+all_vists_monthly <- all_vists %>% 
+  mutate(
+    startOfMonth = floor_date(as_date(mdy_hm(AppointmentDate, tz = NULL)), 'month') 
+    # Floors each date to the beginning of the month and adds a new column.
+  ) %>% 
+  group_by(
+    startOfMonth # Groups each entity by the start date of the month
+  ) %>% 
+  summarise(Appointments = n()) # Aggregates all appointments
+
+```
+
+
+### Step 2: Examine Your Data
+```{r}
+all_vists_monthly$clean_cnt <- tsclean(all_vists_monthly$Appointments) 
+
+ggplot()+
+  geom_line(data = all_vists_monthly, aes(x = startOfMonth, y = clean_cnt))
+
+```
+
+This code add various trend lines by defining the moving average for a yearly, half-yearly, and quarterly trend. The greater the order, the smoother the overall trend will be.
+
+```{r}
+all_vists_monthly$ma_12 <- ma(all_vists_monthly$Appointments, order = 12)
+all_vists_monthly$ma_6 <- ma(all_vists_monthly$Appointments, order = 6)
+all_vists_monthly$ma_3 <- ma(all_vists_monthly$Appointments, order = 3)
+
+
+
+ggplot()+
+  geom_line(data = all_vists_monthly, aes(x = startOfMonth, y = clean_cnt))+
+  geom_line(data = all_vists_monthly, aes(x = startOfMonth, y = ma_12), color = 'blue3') + ## Adds a smoothing method
+  geom_line(data = all_vists_monthly, aes(x = startOfMonth, y = ma_6), color = 'green3') +
+  geom_line(data = all_vists_monthly, aes(x = startOfMonth, y = ma_3),
+            color = 'firebrick')
+```
+
+### Step 3: Decompose your Data
+
+$\textbf{Seasonal component}$ - fluctuations in the data related to calendar cycles. More bikes in the Summer than in the Winter.
+
+$\textbf{Trend component}$ - overall pattern of the series.
+
+$\textbf{Cycle component}$ - The decreasing or increasing patterns that are not seasonal.
+
+Everything that can be attributed to a seasonal, cycle, or trend component is grouped into the $\bf{residual}$ or the \bf{error}.
+
+The process if extracting each components is \bf{decomposition}.
+
+\textbf{The Difference Between Additive and Multiplicative Modeling}
+
+\textbf{Additive} - more appropriate when the seasonal or trend component is not proportional to the level of the series.
+
+\textbf{Multiplicative} - more appropriate when the seasonality component changes with the level or trend of the series.
+
+The stl() function can help with decomposition. 
+
+```{r}
+decomp = stl(ts(all_vists_monthly$clean_cnt, start = c(2017,7), frequency =12 ), s.window = 'periodic')
+
+deseasonal_cnt <- seasadj(decomp)
+plot(decomp)
+
+```
+
+
+### Step 4: Stationarity
+
+Fitting an ARIMA model requires the series to be \bf{stationarity} - the mean, variance, and autocovariance are time invariant.
+
+An \textit{augmented Dickey-Fuller (ADF)} test is a formal statistical test for stationarit. The null hypothesis assumes that the series is non-stationary. ADF tests whethe the change in Y can be explained by lagged value and linear trend.
+A p-value greater than the \alpha, the we fail to reject the null hypothesis and assume that the series in \textit{non-stationary}.
+
+```{r}
+
+adf_test <- adf.test(ts(na.exclude(lag(all_vists_monthly$clean_cnt,13)), start = c(2017,7), frequency =12 ))
+adf_test$p.value
+
+```
+
+### Step 5: Autocorrelations and Choosing Model Order
+
+Autocorrelation plots (also known as ACF or the auto correlation function) can help us to choose the order parameters for the ARIMA model. If the series is correlated with its lags then, generally, there are some trend or seasonal components and therefore its statistical properties are not constant over time.
+
+PACF plots show a 95% significance boundaries as blue dotted lines. 
+
+```{r}
+
+Pacf(ts(na.exclude(lag(all_vists_monthly$clean_cnt,13)), start = c(2017,7), frequency =12 ))
+
+acf(ts(na.exclude(lag(all_vists_monthly$clean_cnt,5)), start = c(2017,7), frequency =12 ))
+
+```
+
+Note to Self: Learn how to interpret PACF and ACF plots.
+
+
+### Step 6: Fitting an ARIMA model
+
+The forecast package allows the user to explicitly specify the order of the model using the arima() function, or automatically generate a set of optimal (p,d,q) using auto.arima(). 
+
+There are two metrics that you can use to determine the fit of a model - Akaike Information Critieria (AIC) and Baysian Infomration Criteria (BIC). Focus on minimizing both the AIC and the BIC.
+
+```{r}
+
+visits_ts_13_arima <- arima((ts(na.exclude(lag(all_vists_monthly$clean_cnt,13)), start = c(2017,7), frequency =12 )), order = c(1,1,1), seasonal = c(1,1,1))
+
+
+visits_ts_13_arima_auto <- auto.arima((ts(na.exclude(lag(all_vists_monthly$clean_cnt,13)), start = c(2017,7), frequency =12 )), stationary = FALSE, max.order = 100, max.p = 12)
+
+```
+
+
+### Step 7: Evaluate and Iterate
+
+```{r}
+
+tsdisplay(residuals(visits_ts_13_arima), lag.max = 45)
+
+tsdisplay(residuals(visits_ts_13_arima_auto), lag.max = 45)
+
+
+```
+
+Testing Model 2
+
+```{r}
+
+
+```
+
+
+```{r, include = FALSE}
+# Determining the correct lag for the series to optimize the p-value
+
+p_values <- {}
+diff_in_p_value_vect <- {}
+
+for (i in 1:24){
+  
+  adf_test <- adf.test(ts(na.exclude(lag(all_vists_monthly$clean_cnt,i)), start = c(2017,7), frequency =12 ))
+  
+  p_values[i] <- adf_test$p.value
+  
+  if (i >= 2){
+    diff_in_p_value <- p_values[i] - p_values[i-1]
+    diff_in_p_value_vect[i] <- diff_in_p_value
+  }
+}
+
+which.min(p_values)
+
+plot(p_values)
+plot(diff_in_p_value_vect)
+plot(diff((diff_in_p_value_vect)))
+
+p_values
+diffInP <- diff(p_values)
+diffInP_ <- append(diffInP, NA, after = 0)
+diffInP2_<- append(diff(diffInP_),NA, after = 0)
+
+p_values_df <-data.frame(P = p_values, diffInP = replace_na(diffInP_,0), diffindiffInP =replace_na(diffInP2_,0), isMin = rep(1,24))
+
+p_values_df$isMin[13] <- 2
+
+# plot(diff(cumsum(na.exclude(diff_in_p_value_vect))))
+
+sum(diff_in_p_value_vect[1:14], na.rm = TRUE)
+
+plot(p_values_df$P, col = p_values_df$isMin)
+plot(p_values_df$diffInP, col = p_values_df$isMin)
+plot(p_values_df$diffindiffInP, col = p_values_df$isMin)
+
+
+```
+
+
+
+
