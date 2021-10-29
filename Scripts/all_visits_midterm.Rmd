@@ -47,6 +47,15 @@ all_vists_monthly_ts <- all_vists_monthly %>%
   ts(start = c(2017,6), frequency = 12)
 
 all_vists_monthly_ts
+
+which.min(all_vists_monthly_ts)
+
+
+all_vists_monthly_ts[35] 
+
+round(mean(all_vists_monthly_ts[c(33:34,36)]),0)
+
+
 ```
 
 
@@ -81,6 +90,7 @@ b <-naive_forecast_tslm$coefficients
 
 forecast::accuracy(naive_forecast_tslm)
 
+sqrt(sum(na.remove(naive_forecast_tslm$residuals^2))/50)
 
 plot(all_vists_monthly_ts, main = 'Naive Forecast\n(Lag = 1)')
 lines(fitted(naive_forecast_tslm), col = 'firebrick', lty = 'dashed')
@@ -91,10 +101,11 @@ arima(naive_forecast_tslm)
 
 
 ```{r SecondModel}
-model_two <- tslm(all_vists_monthly_ts ~ trend)
+model_two <- tslm(all_vists_monthly_ts ~ trend + I(trend^2))
 
-plot(all_vists_monthly_ts, main = 'Trend Model')
-lines(fitted(model_two), col = 'firebrick', lty = 'dashed')
+plot(all_vists_monthly_ts, main = 'Zimbi Trend Model')
+lines(model_two$fitted, col = 'firebrick', lty = 'dashed')
+accuracy(model_two)
 
 summary(model_two)
 ```
@@ -115,5 +126,6 @@ axis(1, at = seq(2017,2022,1), labels = format(seq(2017,2022,1)))
 lines(appointments.lm$fitted, lwd = 3)
 lines(valid.ts)
 
+accuracy(appointments.lm.pred)
 ```
 
