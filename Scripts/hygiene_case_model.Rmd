@@ -1,0 +1,270 @@
+---
+title: "Hygiene Cases Model"
+author: "AlexMartinez"
+date: "11/6/2021"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+## Loading Libraries
+
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(lubridate)
+library(forecast)
+library(tseries)
+library(zoo)
+library(stats)
+library(car)
+
+
+hygiene_case <- read.csv('../Data/DentalIntelFiles/hygiene_case.csv')
+
+hygiene_case_monthly <- hygiene_case %>% 
+  mutate(Presented= mdy(Presented),
+         startOfMonth = floor_date(Presented, 'month')) %>% 
+  group_by(startOfMonth) %>% 
+  summarise(hygiene_cases = n())
+  
+
+```
+
+```{r}
+hygiene_case_weekly <- hygiene_case %>% 
+  mutate(Presented= mdy(Presented),
+         startOfWeek = floor_date(Presented, 'week')) %>% 
+    group_by(startOfWeek) %>% 
+  summarise(hygiene_cases = n())
+
+hygiene_case_weekly$hygiene_cases[which.min(hygiene_case_weekly$hygiene_cases)]
+
+```
+
+
+```{r}
+
+
+hygiene_case_monthly$COVID_month <- if_else(hygiene_case_monthly$startOfMonth >= ymd('2020-02-01') & hygiene_case_monthly$startOfMonth <= ymd('2020-05-01'),1,0)
+hygiene_case_monthly$IsWinter <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(12,1,2),1,0)
+hygiene_case_monthly$IsDec <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(12),1,0) 
+hygiene_case_monthly$IsJan <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(1),1,0) 
+hygiene_case_monthly$IsFeb <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(2),1,0) 
+
+hygiene_case_monthly$IsSpring <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(3,4,5),1,0)
+hygiene_case_monthly$IsMar <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(3),1,0) 
+hygiene_case_monthly$IsApr <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(4),1,0) 
+hygiene_case_monthly$IsMay <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(5),1,0) 
+
+hygiene_case_monthly$IsSummer <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(6,7,8),1,0)
+hygiene_case_monthly$IsJun <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(6),1,0) 
+hygiene_case_monthly$IsJul <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(7),1,0) 
+hygiene_case_monthly$IsAug <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(8),1,0) 
+
+hygiene_case_monthly$IsFall <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(9,10,11),1,0)
+hygiene_case_monthly$IsSep <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(9),1,0) 
+hygiene_case_monthly$IsOct <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(10),1,0) 
+hygiene_case_monthly$IsNov <- if_else(month(hygiene_case_monthly$startOfMonth) %in% c(11),1,0) 
+
+```
+
+
+```{r}
+# TrainTestSplit
+
+x <- hygiene_case_weekly[-2]
+y <- hygiene_case_weekly$hygiene_cases
+
+nTotal <- length(y)
+nValid <- floor(.20*nTotal)
+nTrain <- nTotal - nValid
+
+xTrain <- x[1:nTrain, ]
+yTrain <- y[1:nTrain]
+xValid <- x[(nTrain+1):nTotal, ]
+yValid <- y[(nTrain+1):nTotal]
+
+yTrain.ts <- ts(yTrain, start = c(2017,21), frequency = 52)
+
+yTrain.ts.smooth <- rollmean(yTrain, 16)
+
+
+plot(yTrain.ts)
+lines(rollmean(yTrain.ts, 12), col = 'red')
+lines(rollmean(yTrain.ts, 24), col = 'green')
+lines(rollmean(yTrain.ts, 36), col = 'blue')
+
+plot(stl(yTrain.ts, s.window = 52))
+
+
+plot(yTrain.ts.smooth)
+```
+
+```{r}
+
+which.min(hygiene_case_monthly$hygiene_cases)
+
+hygiene_case_monthly$hygiene_cases[35] <- mean(hygiene_case_monthly$hygiene_cases[c(33:37)])
+
+
+
+x <- hygiene_case_monthly[-2]
+y <- hygiene_case_monthly$hygiene_cases
+
+nTotal <- length(y)
+nValid <- floor(.10*nTotal)
+nTrain <- nTotal - nValid
+
+xTrain <- x[1:nTrain, ]
+yTrain <- y[1:nTrain]
+xValid <- x[(nTrain+1):nTotal, ]
+yValid <- y[(nTrain+1):nTotal]
+
+yTrain.ts <- ts(yTrain, start = c(2017,6), frequency = 12)
+
+plot(yTrain.ts)
+lines(rollmean(yTrain.ts,3), col = 'red')
+lines(rollmean(yTrain.ts,6), col = 'blue')
+lines(rollmean(yTrain.ts,12), col = 'green')
+
+
+plot(stl(yTrain.ts, s.window = 12))
+
+
+
+```
+
+
+```{r}
+
+## Building a Model for Hygiene Cases
+
+for (i in 1:20){
+  print(i)
+  
+  hg_tslm <-tslm(yTrain.ts ~ lag(trend,i))
+
+  print(summary(hg_tslm))
+  
+}
+
+hg_tslm <-tslm(yTrain.ts ~ (trend))
+
+hg_tslm_summary <- summary(hg_tslm)
+hg_tslm_summary
+
+AIC(hg_tslm)
+
+
+### New Model
+hg_tslm <-tslm(yTrain.ts ~ (trend))
+
+hg_tslm_summary <- summary(hg_tslm)
+hg_tslm_summary
+
+AIC(hg_tslm)
+
+```
+
+
+
+```{r}
+
+###Using Months as a Feature
+
+hg_tslm <-tslm(log(yTrain.ts) ~ I((trend))+ IsSummer + IsFall, data = xTrain)
+
+hg_tslm_summary <- summary(hg_tslm)
+
+plot(log(yTrain.ts))
+lines(fitted(hg_tslm), col = 'red', lty = 'dashed')
+
+hg_tslm_summary
+
+AIC(hg_tslm)
+
+boxCox(hg_tslm)
+```
+
+
+
+```{r naiveForecast}
+
+all_vists_monthly_ts_lag_1 <- stats::lag(yTrain.ts, k = 1)
+all_vists_monthly_ts_lag_3 <- stats::lag(yTrain.ts, k = 3)
+all_vists_monthly_ts_lag_12 <- stats::lag(yTrain.ts, k = 12)
+
+plot(yTrain.ts, main = 'Naive Forecast\n(Lag = 1)')
+lines(all_vists_monthly_ts_lag_1, col = 'firebrick', lty = 'dashed',add = TRUE)
+lines(all_vists_monthly_ts_lag_3, col = 'skyblue', lty = 'dashed',add = TRUE)
+lines(all_vists_monthly_ts_lag_12, col = 'green3', lty = 'dashed',add = TRUE)
+
+stats::lag(yTrain.ts, k = -12)
+
+```
+
+```{r residualPlot}
+plot(as.numeric(yTrain.ts - na.remove(all_vists_monthly_ts_lag_1)))
+
+naive_forecast_tslm <- tslm(yTrain.ts ~ all_vists_monthly_ts_lag_1)
+
+b <-naive_forecast_tslm$coefficients
+
+forecast::accuracy(naive_forecast_tslm)
+
+sqrt(sum(na.remove(naive_forecast_tslm$residuals^2))/50)
+
+plot(yTrain.ts, main = 'Naive Forecast\n(Lag = 1)')
+lines(fitted(naive_forecast_tslm), col = 'firebrick', lty = 'dashed')
+# lines(b[1] + b[2], col = 'skyblue', lty = 'dashed')
+
+arima(as.numeric(naive_forecast_tslm))
+```
+
+```{r Final Model}
+
+hygiene_case.lm <- tslm((yTrain.ts) ~ I(log(trend))+ trend +I(trend**3) + I(trend**2) + season)
+hygiene_case.lm.pred <- forecast(hygiene_case.lm, h = nValid+3, level = 95)
+
+plot(hygiene_case.lm.pred, ylim = c(0,200), ylab = 'Appointments', xlab = 'Time', bty = 'l',
+xaxt = 'n', xlim = c(2017.5,2021.5), main = 'Zimbi Dental Appointment Forecast', flty = 2)
+# plot(appointments.lm.pred, xlim = )
+axis(1, at = seq(2017,2022,1), labels = format(seq(2017,2022,1)))
+
+
+lines(ts(y, start = c(2017,6), frequency = 12)[nTrain:nTrain+nValid], col = 'red', bty = 'l')
+lines(hygiene_case.lm$fitted, lwd = 3)
+
+AIC(hygiene_case.lm.pred$model)
+accuracy(hygiene_case.lm.pred)
+arima(hygiene_case.lm$fitted.values)
+
+plot(y)
+```
+
+
+```{r}
+
+hygiene_case.lm <- tslm((yTrain.ts) ~ season)
+hygiene_case.lm.pred <- forecast(hygiene_case.lm, h = nValid, level = 95)
+
+
+plot(hygiene_case.lm.pred, ylim = c(0,200), ylab = 'Appointments', xlab = 'Time', bty = 'l',
+xaxt = 'n', xlim = c(2017.5,2021.5), main = 'Zimbi Dental Appointment Forecast', flty = 2)
+# plot(appointments.lm.pred, xlim = )
+axis(1, at = seq(2017,2022,1), labels = format(seq(2017,2022,1)))
+
+
+lines(ts(y, start = c(2017,6), frequency = 12)[nTrain:nTrain+nValid], col = 'red', bty = 'l')
+lines(hygiene_case.lm$fitted, lwd = 3)
+
+AIC(hygiene_case.lm.pred$model)
+accuracy(hygiene_case.lm.pred)
+arima(hygiene_case.lm$fitted.values)
+
+plot(y)
+
+
+```

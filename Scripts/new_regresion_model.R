@@ -50,6 +50,8 @@ all_vists_monthly$IsNotSchoolSession <- if_else(month(all_vists_monthly$startOfM
 
 COVID_month_dummies <- model.matrix(~0 + COVID_month, data = all_vists_monthly)
 
+### Creating Test Train Split
+
 x <- all_vists_monthly[-2]
 y <- all_vists_monthly$Appointments
 
@@ -63,48 +65,12 @@ xValid <- x[(nTrain+1):nTotal, ]
 yValid <- y[(nTrain+1):nTotal]
 
 yTrain.ts <- ts(yTrain, start = c(2017,6), frequency = 12)
-(formula <- as.formula(paste('yTrain.ts', paste(c('trend', colnames(xTrain)), collapse = '+'),
-                             sep = '~')))
-vists.tslm <- tslm(formula, data = xTrain, lambda = 1)
+
+
 
 vists.tslm.2 <-tslm(yTrain.ts ~ I(trend**2) + COVID_month + IsWinter, data = xTrain)
 summary(vists.tslm.2)
-
 vists.tslm.2.pred <- forecast(vists.tslm.2, newdata = xValid)
 
 plot(vists.tslm.2.pred)
 lines(fitted(vists.tslm.2))
-
-### Non COVID_month adjusted model
-
-# vists.tslm.2 <-tslm(yTrain.ts ~   I(log(trend)) +trend:IsFeb +COVID_month , data = xTrain) # Rsquared - 0.384, alpha =0.10; MAE = 12.02188
-# vists.tslm.2 <-tslm(I(yTrain.ts) ~   trend:IsMar +trend:IsFeb +COVID_month , data = xTrain)
-vists.tslm.2 <-tslm(I((yTrain.ts)) ~   trend + COVID_month  + IsApr +COVID_month:IsApr , data = xTrain)
-summary(vists.tslm.2)
-
-
-vists.tslm.2.pred <- forecast(vists.tslm.2, newdata = xValid)
-
-plot(vists.tslm.2.pred)
-lines(fitted(vists.tslm.2), col = 'green3', lty = 'dashed')
-accuracy(vists.tslm.2)
-accuracy(vists.tslm.2.pred)
-
-### Currently the "Best Fit" and "OverFit"
-##### Each Month 
-
-vists.tslm.overfit <-tslm(log(yTrain.ts) ~   trend + I(trend**2)+ trend:IsApr+IsApr  , data = xTrain)
-summary(vists.tslm.overfit)
-
-
-vists.tslm.overfit.pred <- forecast(vists.tslm.overfit, newdata = xValid)
-
-plot(vists.tslm.overfit.pred)
-lines(fitted(vists.tslm.overfit), col = 'green3', lty = 'dashed')
-accuracy(vists.tslm.overfit)
-accuracy(vists.tslm.overfit.pred)
-
-exp(accuracy((vists.tslm.overfit)))
-
-exp(log(yTrain.ts))
-

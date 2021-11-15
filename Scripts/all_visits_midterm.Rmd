@@ -127,5 +127,7 @@ lines(appointments.lm$fitted, lwd = 3)
 lines(valid.ts)
 
 accuracy(appointments.lm.pred)
+
+AIC(appointments.lm)
 ```
 
