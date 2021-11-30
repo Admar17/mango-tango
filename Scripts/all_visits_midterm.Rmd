@@ -51,9 +51,7 @@ all_vists_monthly_ts
 which.min(all_vists_monthly_ts)
 
 
-all_vists_monthly_ts[35] 
-
-round(mean(all_vists_monthly_ts[c(33:34,36)]),0)
+all_vists_monthly_ts[35] <- round(mean(all_vists_monthly_ts[c(33:34,36:38)]),0)
 
 
 ```
@@ -115,12 +113,12 @@ summary(model_two)
 nValid <- 48
 nTrain <- length(all_vists_monthly_ts) - nValid
 train.ts <- window(all_vists_monthly_ts, start = c(2017,6), end = c(2017,nValid))
-valid.ts <- window(all_vists_monthly_ts, start = c(2017, nTrain + 1), end = c(2017, nTrain+nValid))
-appointments.lm <- tslm(train.ts ~ trend + I(trend^2))
-appointments.lm.pred <- forecast(appointments.lm, h = nValid, level = 0)
+valid.ts <- window(all_vists_monthly_ts, start = c(2017, 6), end = c(2017, nTrain+nValid+3))
+appointments.lm <- tslm(train.ts ~ trend + I(trend^2) + season)
+appointments.lm.pred <- forecast(appointments.lm, h = nValid, level = 95)
 
 plot(appointments.lm.pred, ylim = c(0,200), ylab = 'Appointments', xlab = 'Time', bty = 'l',
-xaxt = 'n', xlim = c(2017.5,2021), main = 'Zimbi Dental Appointment Forecast', flty = 2)
+xaxt = 'n', xlim = c(2017.5,2022), main = 'Zimbi Dental Appointment Forecast', flty = 2)
 # plot(appointments.lm.pred, xlim = )
 axis(1, at = seq(2017,2022,1), labels = format(seq(2017,2022,1)))
 lines(appointments.lm$fitted, lwd = 3)

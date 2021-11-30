@@ -1,0 +1,378 @@
+---
+title: "ProductionModel"
+author: "Alex Martinez"
+date: "11/18/2021"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction 
+
+Beyond working with a certain number of patients every month, there is a need to know how much total production is being completed. Total production is strongly correlated with the number of monthly visits; however, there is great variability in the types of procedures that a patient will have. Total production can also be used a estimator to determine monthly revenues. 
+
+```{r LoadingLibrariesAndData, include=FALSE}
+
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(lubridate)
+library(forecast)
+library(tseries)
+
+
+production <- read.csv('../Data/DentalIntelFiles/production.csv')
+```
+
+
+## Wrangling and Analysis {.tabset}
+
+### Initial Data Strucutre
+
+As noted by the glimpse function, there are only two features that provide some numerical information `DollarsCompleted` and `DollarsScheduled.` However, `DollarsScheduled` has the value `0` across all entries, so the feature provides little insight. As mentioned previously, `DollarsCompleted` can provide a measure of how much expected revenue is to be for any given month.
+
+Another issue that needs to be resolved is the `AppointmentDate` feature is currently stored as a string datatype instead of a date datatype.
+
+```{r}
+production %>% glimpse()
+production %>% head(5)
+
+```
+
+
+
+### Cleaning the Data
+
+The new production data frame only contains the beginning of the month and the total productions dollar completed. Total production dollars is defined is the sum of the value of production. In essence, it can be used as a metric to determine the estimated amount of income received.
+
+```{r CleaningTheData}
+
+production_monthly <- production %>% 
+  mutate(BeginningOfMonth = floor_date(mdy(AppointmentDate), unit = 'month')) %>%
+  group_by(BeginningOfMonth) %>% 
+  summarise(DollarsCompleted = sum(DollarsCompleted)) %>% 
+  mutate(`unique` = 'N')
+
+production_monthly
+```
+
+
+
+### Validating The Data
+
+Although we have cleaned the data, we still need to ensure that the aggregation of the data is correct. We also want to ensure that outliers are properly accounted and that there are no duplicate entries in the data frame.
+
+```{r DataValidation}
+
+production %>% 
+  mutate(AppointmentDate = mdy(AppointmentDate)) %>% 
+  select(AppointmentDate, Patient, Procedures, DollarsCompleted) %>% 
+  filter((month(AppointmentDate) == month(min(AppointmentDate))) & (year(AppointmentDate) == year(min(AppointmentDate)))) %>% 
+  unique()
+
+production %>% nrow()
+
+production %>% unique() %>% nrow()
+
+```
+
+```{r FindDuplicate}
+production %>% 
+  filter(n() > 1) %>% 
+  nrow()
+
+production %>% 
+  unique()
+
+col_vec <- c("AppointmentDate", "Status", "Provider", "Guarantor", "GuarantorPhones", "Patient")
+
+
+production %>% 
+  group_by(AppointmentDate,Status,Provider,Guarantor,GuarantorPhones,Patient,PatientPhones,ProductionType,
+           Procedures,DollarsCompleted,DollarsScheduled) %>% 
+  summarise(entry_num = n()) %>% 
+  data.frame() %>% 
+  filter(max(entry_num) > 2) %>% 
+  view()
+
+## Get This to go down to 1510
+## Or 1084 <- A More Precised Adjustment Result in This
+```
+
+
+```{r FindingDuplicates2}
+
+production$IsDuplicate <- production %>% duplicated()
+
+production[production$IsDuplicate == TRUE,] %>% view()
+
+production[production$IsDuplicate == TRUE,] %>% distinct() %>% nrow()
+```
+
+## Going Forward with Analysis {.tabset}
+
+### Cleaning Data
+
+```{r, include=FALSE}
+
+production_unique <-rbind(distinct(production[production$IsDuplicate == TRUE,]),production[production$IsDuplicate == FALSE,])
+
+production_unique_monthly <- production_unique %>% 
+  mutate(BeginningOfMonth = floor_date(mdy(AppointmentDate), unit = 'month')) %>%
+  group_by(BeginningOfMonth) %>% 
+  summarise(DollarsCompleted = sum(DollarsCompleted)) %>% 
+  mutate(`unique` = 'Y')
+
+# Num of Unique Rows = 13814
+
+left_join(production_monthly, production_unique_monthly, by = c('BeginningOfMonth' = 'BeginningOfMonth')) %>% 
+  mutate(diff_i = DollarsCompleted.x - DollarsCompleted.y,
+         cum_amt = cumsum(diff_i),
+         fifty_pct = if_else(cum_amt >= 18878, TRUE, FALSE)
+         ) %>% 
+  ggplot()+
+  geom_line(aes(x = BeginningOfMonth, y = cumsum(diff_i), color = fifty_pct) )+
+  # theme_minimal()+
+  labs(x = 'Month', y = 'Cummuative Sum of Difference')
+
+combined_df <- rbind(production_monthly, production_unique_monthly) 
+
+combined_df %>% 
+  ggplot() +
+  geom_line(aes(x = BeginningOfMonth, y = DollarsCompleted, color = unique))
+
+
+
+```
+
+```{r}
+
+production_unique_monthly$COVID_month <- if_else(production_unique_monthly$BeginningOfMonth >= ymd('2020-02-01') & production_unique_monthly$BeginningOfMonth <= ymd('2020-05-01'),1,0)
+production_unique_monthly$IsWinter <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(12,1,2),1,0)
+production_unique_monthly$IsDec <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(12),1,0) 
+production_unique_monthly$IsJan <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(1),1,0) 
+production_unique_monthly$IsFeb <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(2),1,0) 
+
+production_unique_monthly$IsSpring <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(3,4,5),1,0)
+production_unique_monthly$IsMar <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(3),1,0) 
+production_unique_monthly$IsApr <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(4),1,0) 
+production_unique_monthly$IsMay <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(5),1,0) 
+
+production_unique_monthly$IsSummer <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(6,7,8),1,0)
+production_unique_monthly$IsJun <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(6),1,0) 
+production_unique_monthly$IsJul <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(7),1,0) 
+production_unique_monthly$IsAug <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(8),1,0) 
+
+production_unique_monthly$IsFall <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(9,10,11),1,0)
+production_unique_monthly$IsSep <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(9),1,0) 
+production_unique_monthly$IsOct <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(10),1,0) 
+production_unique_monthly$IsNov <- if_else(month(production_unique_monthly$BeginningOfMonth) %in% c(11),1,0)
+```
+
+
+```{r uniqueDollarsCompleted}
+
+production_unique <-rbind(distinct(production[production$IsDuplicate == TRUE,]),production[production$IsDuplicate == FALSE,])
+
+production_unique_monthly <- production_unique %>% 
+  mutate(BeginningOfMonth = floor_date(mdy(AppointmentDate), unit = 'month')) %>%
+  group_by(BeginningOfMonth) %>% 
+  summarise(DollarsCompleted = sum(DollarsCompleted))
+
+production_unique_monthly$DollarsCompleted[35] <- mean(production_unique_monthly$DollarsCompleted[c(33,34,36,37)]) # Outlier Adjustment
+
+
+## Creating Train Test Split
+
+x <- production_unique_monthly[-2]
+y <- production_unique_monthly$DollarsCompleted
+
+nTotal <- length(y)
+nValid <- floor(.10*nTotal)
+nTrain <- nTotal - nValid
+
+xTrain <- x[1:nTrain, ]
+yTrain <- y[1:nTrain]
+xValid <- x[(nTrain+1):nTotal, ]
+yValid <- y[(nTrain+1):nTotal]
+
+yTrain.ts <- ts(yTrain, start = c(2017,6), frequency = 12)
+
+plot(yTrain.ts, xlab = 'Date', ylab = 'Dollars Completed', main = 'Zimbi Dental\nProduction in Dollars')
+
+plot(stl(yTrain.ts, s.window = 12))
+```
+
+
+### Cleaning Timeseries
+
+```{r detrending}
+trend = stl(yTrain.ts, s.window = "periodic")$time.series[,2]
+
+detrend_ts = yTrain.ts - (trend - trend[1])
+
+detrend_ts_12 = yTrain.ts - (trend - trend[12])
+
+plot(detrend_ts)
+lines(detrend_ts_12, col = 'skyblue')
+lines(yTrain.ts, col ='firebrick3')
+```
+
+```{r CustomARIMA}
+
+train_arim_model <- Arima(yTrain.ts, order = c(6,6,5),
+      seasonal = c(0,1,1))
+ 
+round(train_arim_model$fitted - yTrain.ts,2)
+
+
+plot(train_arim_model$fitted)
+lines(yTrain.ts, col = 'red', lty = 'dashed')
+
+plot(train_arim_model$residuals)
+
+
+train_arim_model$aic
+
+
+# Takes about 30 minutes to run completely
+## Working on function and a version that saves i,j,h properites and displays the min
+
+# for (i in 1:1){
+#   
+#   skip_to_next <- FALSE
+#   
+#   for (j in 1:1){
+#     
+#     for (h in 1:1){
+#       
+#       
+#       
+#       skip_to_next <- FALSE
+#     
+#       train_arim_model <- tryCatch(Arima(yTrain.ts, order = c(i,j,h),
+#       seasonal = c(0,1,1)),error = function(e) { skip_to_next <<- TRUE})
+#       
+#       if(skip_to_next) { next }  
+#       
+#       # print(paste("i":i,", j:", j, ", h:",h))
+#       print(paste(i,j,h))
+# 
+#       print(train_arim_model$aic)
+#       
+#       
+#     }
+#     
+#     
+# 
+#       
+#       
+#   }
+# 
+# }
+
+## After testing the best order combinations with seasonal c(0,1,1) are
+## c(p,d,q) = c(AR,I,MA) - AIC
+## c(1,6,4) - 699.641
+## c(5,5,5) - 697.1505
+## c(5,6,3) - 688.43__
+## c(6,6,5) - 694.63
+## c(7,6,4) - 697.92
+## c(9,6,4) - 697.41
+
+
+```
+
+```{r CustomARIMA2}
+
+train_arim_model <- Arima(yTrain.ts, order = c(5,6,3),
+      seasonal = c(0,1,1))
+
+
+
+## Learn to Adjust For Seasonality
+
+
+plot(train_arim_model$fitted)
+lines(yTrain.ts, col = 'red', lty = 'dashed')
+
+monthly_dollars_completed_ts <- ts(production_unique_monthly$DollarsCompleted, start = c(2017,6), end = c(2021,8), frequency = 12)
+
+valid.ts <- window(monthly_dollars_completed_ts, start = c(2017, 6), end = c(2017, nTrain+nValid+3))
+# appointments.lm <- tslm(train_arim_model ~ trend + I(trend^2) + season )
+appointments.lm.pred <- forecast(train_arim_model, h = nValid, level = 0)
+
+
+summary(appointments.lm)
+
+plot(appointments.lm.pred, ylim = c(0,100000), ylab = 'Appointments', xlab = 'Time', bty = 'l',
+xaxt = 'n', xlim = c(2017.5,2022), main = 'Zimbi Dental Appointment Forecast', flty = 2)
+# plot(appointments.lm.pred, xlim = )
+axis(1, at = seq(2017,2022,1), labels = format(seq(2017,2022,1)))
+# lines(yTrain.ts, lwd = 3)
+lines(monthly_dollars_completed_ts)
+```
+
+
+```{r reducingAICViaSeasonality}
+
+# Takes about 30 minutes to run completely
+## Working on function and a version that saves i,j,h properites and displays the min
+
+ for (i in 1:5){
+
+   skip_to_next <- FALSE
+
+   for (j in 1:5){
+
+     for (h in 1:5){
+
+
+
+       skip_to_next <- FALSE
+
+       train_arim_model <- tryCatch(Arima(yTrain.ts, order = c(5,6,3),
+       seasonal = c(i,j,h)),error = function(e) { skip_to_next <<- TRUE})
+
+       if(skip_to_next) { next }
+
+       # print(paste("i":i,", j:", j, ", h:",h))
+       print(paste(i,j,h))
+
+       print(train_arim_model$aic)
+
+
+     }
+
+
+
+
+
+   }
+
+ }
+
+```
+
+```{r AutoARIMA}
+
+train_auto_arim_model <- auto.arima(yTrain.ts)
+train_auto_arim_model$aic
+ 
+(sum(round(abs(train_auto_arim_model$fitted - yTrain.ts),2)))
+
+
+plot(train_auto_arim_model$fitted)
+lines(yTrain.ts, col = 'red', lty = 'dashed')
+
+plot(train_auto_arim_model$residuals)
+
+train_arim_model$aic
+
+
+
+```
