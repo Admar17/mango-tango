@@ -23,6 +23,7 @@ library(tidyverse)
 library(lubridate)
 library(forecast)
 library(tseries)
+library(car)
 
 
 production <- read.csv('../Data/DentalIntelFiles/production.csv')
@@ -91,13 +92,12 @@ production %>%
 col_vec <- c("AppointmentDate", "Status", "Provider", "Guarantor", "GuarantorPhones", "Patient")
 
 
-production %>% 
-  group_by(AppointmentDate,Status,Provider,Guarantor,GuarantorPhones,Patient,PatientPhones,ProductionType,
-           Procedures,DollarsCompleted,DollarsScheduled) %>% 
-  summarise(entry_num = n()) %>% 
-  data.frame() %>% 
-  filter(max(entry_num) > 2) %>% 
-  view()
+# production %>% 
+#   group_by(AppointmentDate,Status,Provider,Guarantor,GuarantorPhones,Patient,PatientPhones,ProductionType,
+#            Procedures,DollarsCompleted,DollarsScheduled) %>% 
+#   summarise(entry_num = n()) %>% 
+#   data.frame() %>% 
+#   filter(max(entry_num) > 2)
 
 ## Get This to go down to 1510
 ## Or 1084 <- A More Precised Adjustment Result in This
@@ -108,8 +108,7 @@ production %>%
 
 production$IsDuplicate <- production %>% duplicated()
 
-production[production$IsDuplicate == TRUE,] %>% view()
-
+# production[production$IsDuplicate == TRUE,]
 production[production$IsDuplicate == TRUE,] %>% distinct() %>% nrow()
 ```
 
@@ -201,6 +200,7 @@ xValid <- x[(nTrain+1):nTotal, ]
 yValid <- y[(nTrain+1):nTotal]
 
 yTrain.ts <- ts(yTrain, start = c(2017,6), frequency = 12)
+all.ts <- ts(c(yTrain, yValid),start = c(2017,6), frequency = 12)
 
 plot(yTrain.ts, xlab = 'Date', ylab = 'Dollars Completed', main = 'Zimbi Dental\nProduction in Dollars')
 
@@ -322,56 +322,106 @@ lines(monthly_dollars_completed_ts)
 
 # Takes about 30 minutes to run completely
 ## Working on function and a version that saves i,j,h properites and displays the min
+# 
+# loc <- 0
+# 
+# season_vec <- {}
+# 
+# season_aic <- {}
+# 
+#  for (i in 1:5){
+# 
+#    skip_to_next <- FALSE
+# 
+#    for (j in 1:5){
+# 
+#      for (h in 1:5){
+#        
+#        loc <- 1 + loc
+# 
+# 
+# 
+#        skip_to_next <- FALSE
+# 
+#        train_arim_model <- tryCatch(Arima(yTrain.ts, order = c(5,6,3),
+#        seasonal = c(i,j,h)),error = function(e) { skip_to_next <<- TRUE})
+# 
+#        if(skip_to_next) { next }
+# 
+#        # print(paste("i":i,", j:", j, ", h:",h))
+#        print(paste(i,j,h))
+# 
+#        print(train_arim_model$aic)
+#        
+#        season_vec[i]<- paste(i,j,h)
+#        
+#        season_aic[i] <- train_arim_model$aic
+# 
+# 
+#      }
+# 
+# 
+# 
+# 
+# 
+#    }
+# 
+#  }
+# 
+# season_vec[which.min(season_aic)]
+# 1 1 5
+```
 
- for (i in 1:5){
-
-   skip_to_next <- FALSE
-
-   for (j in 1:5){
-
-     for (h in 1:5){
+```{r FinalModel}
+optimal_model <- Arima((all.ts), order = c(2,2,3),seasonal = c(1,1,1))
+forecasted_model <- forecast(optimal_model, h = 12,level = 0)
+forecast_naive_seasonal <- snaive(all.ts, level = c(0,0),h = 12, fan = FALSE, lambda = 'auto')
+forecast_naive <- naive(all.ts, level = c(0,50),h = 12, fan = FALSE)
 
 
 
-       skip_to_next <- FALSE
+plot(all.ts, xlim = c(2019,2022.75), col = 'black', xlab = 'Month', ylab = 'Dollars Completed',
+     main = 'Zimbi Dental Monthly Dollars Completed')
+# lines(, col = 'firebrick')
+lines(ts(c(forecasted_model$fitted,(forecasted_model$upper+forecasted_model$lower)/2), start = c(2017,6), frequency = 12), col = 'firebrick')
+lines(ts(c(forecast_naive$fitted,forecast_naive$upper[,1]), start = c(2017,6), frequency = 12), col = 'skyblue', lty = 'dashed')
+lines(ts(c(forecast_naive_seasonal$fitted,forecast_naive_seasonal$upper[,1]), start = c(2017,6), frequency = 12), col = 'green3', lty = 'dotted')
+legend(2021, 90000, legend = c('Completed Dollars','Minimum AIC Model','Naive','Seasonal Naive'),
+       col = c('black','firebrick','skyblue','green3'), lty = c('solid','solid','dashed','dotted'))
 
-       train_arim_model <- tryCatch(Arima(yTrain.ts, order = c(5,6,3),
-       seasonal = c(i,j,h)),error = function(e) { skip_to_next <<- TRUE})
-
-       if(skip_to_next) { next }
-
-       # print(paste("i":i,", j:", j, ", h:",h))
-       print(paste(i,j,h))
-
-       print(train_arim_model$aic)
-
-
-     }
+AIC(forecasted_model$model)
 
 
 
+```
+
+```{r}
 
 
-   }
+forecasted_model <- forecast(optimal_model, h = 6,level = c(25,75))
+plot(forecasted_model, col = 'firebrick', xlab = 'Month', ylab = 'Dollars Completed', main = 'Zimbi Dental Monthly Dollars Completed')
 
- }
+forecast_naive_seasonal <- snaive(all.ts, level = c(25,75),h = 6, fan = FALSE, lambda = 'auto')
+plot(forecast_naive_seasonal,  col = 'green3', lty = 'dotted', 
+      xlab = 'Month', ylab = 'Dollars Completed', main = 'Zimbi Dental Monthly Dollars Completed\nNaive Seasonal Model')
+
+forecast_naive <- naive(all.ts, level = c(25,75),h = 6, fan = FALSE)
+plot(forecast_naive, col = 'skyblue', lty = 'dashed', xlab = 'Month', ylab = 'Dollars Completed', main = 'Zimbi Dental Monthly Dollars Completed\nNaive Model' )
 
 ```
 
 ```{r AutoARIMA}
 
-train_auto_arim_model <- auto.arima(yTrain.ts)
-train_auto_arim_model$aic
+train_auto_arim_model <- forecast(auto.arima(all.ts, d = 1),h=12, level = c(25,75))
+
  
-(sum(round(abs(train_auto_arim_model$fitted - yTrain.ts),2)))
 
 
-plot(train_auto_arim_model$fitted)
-lines(yTrain.ts, col = 'red', lty = 'dashed')
 
-plot(train_auto_arim_model$residuals)
+plot(train_auto_arim_model, col = 'black', xlab = 'Month', ylab = 'Dollars Completed',
+     main = 'Zimbi Dental Monthly Dollars Completed\n Auto-Arima')
 
-train_arim_model$aic
+
 
 
 
